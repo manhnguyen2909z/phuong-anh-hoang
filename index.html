@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&display=swap" rel="stylesheet">
+
 <title>Khảo Sát Bí Mật</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
 <style>
 
@@ -13,7 +15,7 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:"Noto Serif", Georgia, serif;
+    font-family:"Noto Serif", Georgia, "Times New Roman", serif;
 }
 
 body{
@@ -272,6 +274,53 @@ body{
 }
 
 
+/* câu hỏi tự nhập */
+
+.text-answer{
+
+    width:100%;
+
+    min-height:110px;
+
+    padding:14px 16px;
+
+    border:1px solid #ddd2b0;
+
+    border-radius:4px;
+
+    background:#ffffff;
+
+    color:#333;
+
+    font-size:16px;
+
+    resize:vertical;
+
+    outline:none;
+
+    transition:.3s;
+
+}
+
+
+.text-answer:focus{
+
+    border-color:#c9a227;
+
+    background:#fbf3dd;
+
+}
+
+
+.text-answer::placeholder{
+
+    color:#aaa;
+
+    font-style:italic;
+
+}
+
+
 
 /* button */
 
@@ -475,7 +524,7 @@ vài câu hỏi nhỏ thôi, trả lời thật lòng nhé.
 <div class="progress-text">
 
 <span id="count">
-Câu 1/5
+Câu 1/6
 </span>
 
 <span>
@@ -701,6 +750,27 @@ Cần thêm thời gian
 
 
 
+
+<div class="question">
+
+
+<h2>
+6. Điều bạn muốn nói với người tạo khảo sát này?
+</h2>
+
+
+<textarea
+class="text-answer"
+name="q6"
+id="q6"
+placeholder="Viết vài dòng bất kỳ..."
+></textarea>
+
+
+</div>
+
+
+
 <button id="nextBtn">
 Tiếp tục
 </button>
@@ -796,30 +866,61 @@ nextBtn.addEventListener("click",()=>{
         questions[currentQuestion];
 
 
-    const checked =
-        current.querySelector(
-            "input[type='radio']:checked"
-        );
+    // câu hỏi dạng tự nhập (textarea)
+
+    const textInput =
+        current.querySelector("textarea");
 
 
+    if(textInput){
 
-    // chưa chọn đáp án
 
-    if(!checked){
+        // câu tự nhập, không bắt buộc nhập mới cho qua
+        // nếu muốn bắt buộc, bỏ comment 3 dòng dưới
 
-        alert("Phuong Anh Hoang chọn một đáp án trước nhé.");
+        // if(textInput.value.trim() === ""){
+        //     alert("Bạn viết vài dòng trước nhé.");
+        //     return;
+        // }
 
-        return;
+
+        answers[
+            `q${currentQuestion + 1}`
+        ] = textInput.value.trim();
+
 
     }
 
+    else{
 
 
-    // lưu câu trả lời
+        const checked =
+            current.querySelector(
+                "input[type='radio']:checked"
+            );
 
-    answers[
-        `q${currentQuestion + 1}`
-    ] = checked.value;
+
+
+        // chưa chọn đáp án
+
+        if(!checked){
+
+            alert("Phuong Anh Hoang chọn một đáp án trước nhé.");
+
+            return;
+
+        }
+
+
+
+        // lưu câu trả lời
+
+        answers[
+            `q${currentQuestion + 1}`
+        ] = checked.value;
+
+
+    }
 
 
 
@@ -866,9 +967,39 @@ nextBtn.addEventListener("click",()=>{
 
 
 
+function sendToGoogleSheet(){
 
+
+const url =
+"https://script.google.com/macros/s/AKfycbwBbThksN_rdlBVXonYbF36qz84AHw-1RJkaDt2gwdbXnH8LTfbGFnIenvfusRUeLUcpA/exec";
+
+
+
+fetch(url,{
+
+    method:"POST",
+
+    mode:"no-cors",
+
+    body:JSON.stringify(answers)
+
+})
+
+.catch(err=>{
+
+    console.log(
+        "Lỗi:",
+        err
+    );
+
+});
+
+
+}
 
 function showResult(){
+
+    sendToGoogleSheet();
 
 
     survey.style.display="none";
