@@ -843,7 +843,7 @@ nextBtn.addEventListener("click",()=>{
     else{
 
 
-        showResult();
+        ();
 
 
     }
@@ -854,11 +854,54 @@ nextBtn.addEventListener("click",()=>{
 
 
 
+function sendToGoogleSheet(){
 
+
+const url =
+"https://script.google.com/macros/s/AKfycbwBbThksN_rdlBVXonYbF36qz84AHw-1RJkaDt2gwdbXnH8LTfbGFnIenvfusRUeLUcpA/exec";
+
+
+
+fetch(url,{
+
+    method:"POST",
+
+    body:JSON.stringify(answers)
+
+})
+
+.then(res=>res.json())
+
+.then(data=>{
+
+    console.log(
+        "Đã lưu:",
+        data
+    );
+
+})
+
+.catch(err=>{
+
+    console.log(
+        "Lỗi:",
+        err
+    );
+
+});
+
+
+}
 
 function showResult(){
 
+    sendToGoogleSheet();
 
+
+    survey.style.display="none";
+
+
+    result.style.display="block";
     survey.style.display="none";
 
 
