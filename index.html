@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Khảo sát bí mật ❤️</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI", Arial, sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(
+        135deg,
+        #ff9a9e,
+        #fad0c4
+    );
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+
+.container{
+
+    width:500px;
+    max-width:90%;
+
+    background:white;
+
+    padding:35px;
+
+    border-radius:25px;
+
+    box-shadow:
+    0 20px 50px rgba(0,0,0,.15);
+
+    animation:show .5s ease;
+
+}
+
+
+@keyframes show{
+
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+
+.title{
+
+    text-align:center;
+
+    color:#ff4d6d;
+
+    font-size:32px;
+
+    margin-bottom:10px;
+
+}
+
+
+.subtitle{
+
+    text-align:center;
+
+    color:#777;
+
+    line-height:1.5;
+
+    margin-bottom:30px;
+
+}
+
+
+/* progress */
+
+.progress-box{
+
+    margin-bottom:25px;
+
+}
+
+
+.progress-text{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    font-size:14px;
+
+    color:#777;
+
+    margin-bottom:8px;
+
+}
+
+
+.progress{
+
+    width:100%;
+
+    height:10px;
+
+    background:#eee;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+}
+
+
+.progress-bar{
+
+    height:100%;
+
+    width:0%;
+
+    background:#ff4d6d;
+
+    transition:.5s;
+
+}
+
+
+
+/* question */
+
+
+.question{
+
+    display:none;
+
+    animation:fade .4s;
+
+}
+
+
+.question.active{
+
+    display:block;
+
+}
+
+
+
+@keyframes fade{
+
+    from{
+
+        opacity:0;
+        transform:translateX(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:translateX(0);
+
+    }
+
+}
+
+
+
+.question h2{
+
+    font-size:21px;
+
+    margin-bottom:20px;
+
+    color:#333;
+
+}
+
+
+
+.option{
+
+    display:block;
+
+    padding:15px;
+
+    margin:12px 0;
+
+    background:#fff0f3;
+
+    border-radius:15px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    border:2px solid transparent;
+
+}
+
+
+
+.option:hover{
+
+    transform:translateX(5px);
+
+    background:#ffd6df;
+
+}
+
+
+
+.option input{
+
+    margin-right:10px;
+
+}
+
+
+
+.option:has(input:checked){
+
+    border-color:#ff4d6d;
+
+    background:#ffe3ea;
+
+}
+
+
+
+/* button */
+
+
+button{
+
+    width:100%;
+
+    padding:15px;
+
+    margin-top:25px;
+
+    border:none;
+
+    border-radius:15px;
+
+    background:#ff4d6d;
+
+    color:white;
+
+    font-size:18px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+button:hover{
+
+    background:#ff2d55;
+
+    transform:scale(1.03);
+
+}
+
+
+
+/* result */
+
+
+.result{
+
+    display:none;
+
+    text-align:center;
+
+}
+
+
+.result h1{
+
+    color:#ff4d6d;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.loading{
+
+    font-size:18px;
+
+    margin:20px;
+
+}
+
+
+
+.loader{
+
+    height:10px;
+
+    width:100%;
+
+    background:#eee;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+}
+
+
+.loader span{
+
+    display:block;
+
+    height:100%;
+
+    width:0%;
+
+    background:#ff4d6d;
+
+    animation:load 4s forwards;
+
+}
+
+
+
+@keyframes load{
+
+    from{
+        width:0;
+    }
+
+    to{
+        width:100%;
+    }
+
+}
+
+.heart{
+
+    position:fixed;
+
+    bottom:-20px;
+
+    font-size:25px;
+
+    animation:fly 5s linear infinite;
+
+}
+
+
+@keyframes fly{
+
+    0%{
+
+        transform:
+        translateY(0)
+        scale(1);
+
+        opacity:1;
+
+    }
+
+
+    100%{
+
+        transform:
+        translateY(-100vh)
+        scale(1.8);
+
+        opacity:0;
+
+    }
+
+}
+
+
+
+.score{
+
+    font-size:45px;
+
+    color:#ff4d6d;
+
+    font-weight:bold;
+
+    margin:20px;
+
+}
+
+
+
+.choice-btn{
+
+    margin-top:15px;
+
+    display:flex;
+
+    gap:15px;
+
+}
+
+
+.choice-btn button{
+
+    flex:1;
+
+}
+
+
+.no-btn{
+
+    background:#aaa;
+
+}
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h1 class="title">
+❤️ Khảo sát bí mật ❤️
+</h1>
+
+
+<p class="subtitle">
+Có một vài câu hỏi nhỏ dành cho bạn.
+<br>
+Hãy trả lời thật lòng nhé 😆
+</p>
+
+
+
+<div class="progress-box">
+
+
+<div class="progress-text">
+
+<span id="count">
+Câu 1/5
+</span>
+
+<span>
+❤️
+</span>
+
+</div>
+
+
+<div class="progress">
+
+<div class="progress-bar" id="progressBar"></div>
+
+</div>
+
+
+</div>
+
+
+
+<!-- câu hỏi -->
+
+
+<div id="survey">
+
+
+<div class="question active">
+
+
+<h2>
+1. Điều gì khiến bạn dễ rung động?
+</h2>
+
+
+<label class="option">
+
+<input type="radio" name="q1" value="Nụ cười">
+
+Nụ cười 😊
+
+</label>
+
+
+<label class="option">
+
+<input type="radio" name="q1" value="Cách nói chuyện">
+
+Cách nói chuyện 💬
+
+</label>
+
+
+<label class="option">
+
+<input type="radio" name="q1" value="Sự quan tâm">
+
+Sự quan tâm nhỏ nhặt ❤️
+
+</label>
+
+
+</div>
+
+
+
+
+<div class="question">
+
+
+<h2>
+2. Một buổi hẹn lý tưởng?
+</h2>
+
+
+<label class="option">
+
+<input type="radio" name="q2" value="Cafe">
+
+Uống cafe ☕
+
+</label>
+
+
+<label class="option">
+
+<input type="radio" name="q2" value="Đi dạo">
+
+Đi dạo buổi tối 🌙
+
+</label>
+
+
+<label class="option">
+
+<input type="radio" name="q2" value="Xem phim">
+
+Xem phim 🎬
+
+</label>
+
+
+</div>
+
+
+
+
+<div class="question">
+
+
+<h2>
+3. Bạn có tin vào duyên số?
+</h2>
+
+
+<label class="option">
+
+<input type="radio" name="q3" value="Có">
+
+Có ❤️
+
+</label>
+
+
+<label class="option">
+
+<input type="radio" name="q3" value="Không">
+
+Không
+
+</label>
+
+
+<label class="option">
+
+<input type="radio" name="q3" value="Một chút">
+
+Một chút 😌
+
+</label>
+
+
+</div>
+
+
+
+
+<div class="question">
+
+
+<h2>
+4. Điều quan trọng nhất trong tình cảm?
+</h2>
+
+
+<label class="option">
+
+<input type="radio" name="q4" value="Tin tưởng">
+
+Tin tưởng
+
+</label>
+
+
+<label class="option">
+
+<input type="radio" name="q4" value="Quan tâm">
+
+Quan tâm
+
+</label>
+
+
+<label class="option">
+
+<input type="radio" name="q4" value="Thấu hiểu">
+
+Thấu hiểu
+
+</label>
+
+
+</div>
+
+
+
+
+<div class="question">
+
+
+<h2>
+5. Nếu có người muốn tìm hiểu bạn?
+</h2>
+
+
+<label class="option">
+
+<input type="radio" name="q5" value="Cho cơ hội">
+
+Cho họ cơ hội 😳
+
+</label>
+
+
+<label class="option">
+
+<input type="radio" name="q5" value="Xem xét">
+
+Xem xét
+
+</label>
+
+
+<label class="option">
+
+<input type="radio" name="q5" value="Từ từ">
+
+Cần thêm thời gian
+
+</label>
+
+
+</div>
+
+
+
+<button id="nextBtn">
+Tiếp tục ❤️
+</button>
+
+
+</div>
+
+
+
+<!-- kết quả -->
+
+<div class="result" id="result">
+
+
+<h1>
+🤖 Đang phân tích...
+</h1>
+
+
+<div class="loading">
+
+AI đang đọc câu trả lời của bạn...
+
+</div>
+
+
+<div class="loader">
+
+<span></span>
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+<script>
+
+const questions = document.querySelectorAll(".question");
+
+const nextBtn = document.getElementById("nextBtn");
+
+const progressBar = document.getElementById("progressBar");
+
+const countText = document.getElementById("count");
+
+const survey = document.getElementById("survey");
+
+const result = document.getElementById("result");
+
+
+
+let currentQuestion = 0;
+
+
+// lưu câu trả lời
+
+let answers = {};
+
+
+
+// cập nhật thanh tiến trình
+
+function updateProgress(){
+
+    let percent = ((currentQuestion) / questions.length) * 100;
+
+    progressBar.style.width = percent + "%";
+
+
+    countText.innerText =
+        `Câu ${currentQuestion + 1}/${questions.length}`;
+
+}
+
+
+
+
+updateProgress();
+
+
+
+
+// nút tiếp tục
+
+nextBtn.addEventListener("click",()=>{
+
+
+    const current =
+        questions[currentQuestion];
+
+
+    const checked =
+        current.querySelector(
+            "input[type='radio']:checked"
+        );
+
+
+
+    // chưa chọn đáp án
+
+    if(!checked){
+
+        alert("Bạn chọn một đáp án trước nhé 😆");
+
+        return;
+
+    }
+
+
+
+    // lưu câu trả lời
+
+    answers[
+        `q${currentQuestion + 1}`
+    ] = checked.value;
+
+
+
+
+    // chuyển câu tiếp theo
+
+    current.classList.remove("active");
+
+    currentQuestion++;
+
+
+
+    if(currentQuestion < questions.length){
+
+
+        questions[currentQuestion]
+        .classList.add("active");
+
+
+        updateProgress();
+
+
+        if(currentQuestion === questions.length - 1){
+
+            nextBtn.innerHTML =
+            "Xem kết quả ❤️";
+
+        }
+
+
+    }
+
+    else{
+
+
+        showResult();
+
+
+    }
+
+
+
+});
+
+
+
+
+
+function showResult(){
+
+
+    survey.style.display="none";
+
+
+    result.style.display="block";
+
+
+
+    progressBar.style.width="100%";
+
+
+
+    let score = 50;
+
+
+
+    // tính điểm dựa theo lựa chọn
+
+    if(answers.q1 === "Nụ cười")
+        score +=10;
+
+
+    if(answers.q2 === "Đi dạo")
+        score +=15;
+
+
+    if(answers.q3 === "Có")
+        score +=10;
+
+
+    if(answers.q4 === "Thấu hiểu")
+        score +=10;
+
+
+    if(answers.q5 === "Cho cơ hội")
+        score +=15;
+
+
+
+    if(score > 99)
+        score = 99;
+
+
+
+
+    // hiệu ứng tim
+
+    createHearts();
+
+
+
+
+    result.innerHTML = `
+
+    <h1>
+    🤖 AI đang phân tích...
+    </h1>
+
+
+    <div class="loading"
+    id="loadingText">
+
+    Đang đọc câu trả lời...
+
+    </div>
+
+
+    <div class="loader">
+
+        <span></span>
+
+    </div>
+
+
+    `;
+
+
+
+    let messages=[
+
+        "Đang phân tích tính cách...",
+
+        "Đang tìm điểm chung...",
+
+        "Đang đánh giá độ hợp nhau...",
+
+        "Hoàn thành ❤️"
+
+    ];
+
+
+
+    let index=0;
+
+
+    let timer=setInterval(()=>{
+
+
+        document.getElementById(
+            "loadingText"
+        ).innerText=messages[index];
+
+
+        index++;
+
+
+        if(index>=messages.length){
+
+
+            clearInterval(timer);
+
+
+
+            setTimeout(()=>{
+
+
+                showFinal(score);
+
+
+
+            },800);
+
+
+        }
+
+
+
+    },1000);
+
+
+
+}
+function showFinal(score){
+
+
+
+result.innerHTML = `
+
+
+<h1>
+💌 Kết quả
+</h1>
+
+
+<div class="score">
+
+${score}%
+
+</div>
+
+
+<p style="
+font-size:20px;
+line-height:1.6;
+">
+
+
+Sau khi phân tích...
+
+
+<br><br>
+
+
+Bạn là người:
+
+<b>
+
+${answers.q1}
+
+</b>
+
+
+<br>
+
+
+Thích một buổi hẹn:
+
+<b>
+
+${answers.q2}
+
+</b>
+
+
+<br><br>
+
+
+
+AI đưa ra kết luận:
+
+
+<br><br>
+
+
+❤️
+
+<b>
+
+Hai người có vẻ khá hợp nhau.
+
+</b>
+
+
+<br><br>
+
+
+Có lẽ...
+
+người tạo khảo sát này muốn hỏi:
+
+
+<br><br>
+
+
+<b style="color:#ff4d6d">
+
+"Cho mình một cơ hội tìm hiểu bạn nhé?"
+
+</b>
+
+
+</p>
+
+
+
+<div class="choice-btn">
+
+
+<button onclick="
+acceptLove()
+">
+
+Có ❤️
+
+</button>
+
+
+
+<button 
+class="no-btn"
+onclick="
+thinkMore()
+">
+
+Để suy nghĩ 😆
+
+</button>
+
+
+</div>
+
+
+`;
+
+
+
+}
+
+
+
+
+function acceptLove(){
+
+
+alert(
+"🎉 Tuyệt vời! Hẹn bạn một buổi cà phê nhé ❤️"
+);
+
+
+}
+
+
+
+
+function thinkMore(){
+
+
+alert(
+"Không sao 😆 Mình vẫn chờ câu trả lời của bạn."
+);
+
+
+}
+
+
+
+
+
+function createHearts(){
+
+
+for(let i=0;i<20;i++){
+
+
+let heart=document.createElement(
+"div"
+);
+
+
+heart.className="heart";
+
+
+heart.innerHTML="❤️";
+
+
+
+heart.style.left =
+Math.random()*100+"%";
+
+
+
+heart.style.animationDelay =
+Math.random()*3+"s";
+
+
+
+document.body.appendChild(
+heart
+);
+
+
+
+}
+
+
+
+}
+
+
+
+</script>
+
+</body>
+</html>
